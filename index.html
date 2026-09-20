@@ -1,90 +1,75 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Kerala Lottery Result — Unofficial Demo</title>
-<style>
-*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;color:#17352b;background:#eef7f1}
-.hero{min-height:420px;padding:28px 18px 55px;position:relative;overflow:hidden;
-background:linear-gradient(135deg,#063b2a 0%,#087f59 48%,#d9f4df 100%)}
-.hero:before{content:"";position:absolute;inset:0;opacity:.22;
-background:radial-gradient(circle at 20% 30%,#fff 0 2px,transparent 3px),radial-gradient(circle at 75% 65%,#fff 0 2px,transparent 3px);
-background-size:70px 70px,95px 95px}
-nav{max-width:1050px;margin:auto;display:flex;justify-content:space-between;align-items:center;color:white;position:relative;z-index:2}
-.brand{font-weight:800;font-size:22px}.badge{font-size:11px;background:#ffffff2b;border:1px solid #ffffff55;padding:7px 10px;border-radius:20px}
-.hero-content{max-width:850px;margin:70px auto 0;text-align:center;color:white;position:relative;z-index:2}
-h1{font-size:clamp(38px,7vw,70px);margin:0 0 12px;letter-spacing:-2px}
-.hero p{font-size:18px;margin:0 auto 28px;opacity:.94}
-.search{max-width:760px;margin:auto;background:#fff;padding:18px;border-radius:22px;box-shadow:0 18px 50px #002d1b55;display:flex;gap:10px}
-.search input{flex:1;border:1px solid #c9ddd1;border-radius:13px;padding:15px;font-size:16px;outline:none}
-.search button{border:0;background:#087f59;color:white;border-radius:13px;padding:0 22px;font-weight:800;font-size:16px}
-main{max-width:1050px;margin:-35px auto 40px;padding:0 18px;position:relative}
-.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}
-.card{background:white;border:1px solid #dbeae0;border-radius:20px;padding:24px;box-shadow:0 8px 28px #0b49301a}
-.card h2{margin:0 0 8px}.muted{color:#6a7d74}.result{margin-top:18px;display:none}
-.result .ticket{font-size:32px;font-weight:900;color:#087f59}
-.prize{font-size:28px;font-weight:900;margin-top:8px}
-.info{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
-.info div{background:#f2faf5;border-radius:14px;padding:16px}.label{font-size:12px;color:#6a7d74}.value{font-weight:800;margin-top:5px}
-footer{background:#063b2a;color:#d8eee1;padding:25px 18px;text-align:center;font-size:12px}
-@media(max-width:720px){.search{flex-direction:column}.search button{padding:14px}.grid{grid-template-columns:1fr}.info{grid-template-columns:1fr}nav{align-items:flex-start}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kerala Lottery Result</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<section class="hero">
-<nav><div class="brand">🌴 Kerala Lottery Result</div><div class="badge">RESULT INFORMATION</div></nav>
-<div class="hero-content">
-<h1>Kerala Result Lottery</h1>
-<p>Check a ticket number against the result data published on this demonstration website.</p>
-<div class="search">
-<input id="ticket" placeholder="Enter ticket number e.g. KL123456" autocomplete="off">
-<button onclick="checkResult()">Check Result</button>
-</div>
-</div>
-</section>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">KL</div>
+      <div>
+        <h1>Kerala Lottery</h1>
+        <p>Ticket Result Checker</p>
+      </div>
+    </div>
+  </header>
 
-<main>
-<div class="grid">
-<section class="card">
-<h2>Ticket Result</h2>
-<p class="muted">Enter a ticket number above to view the stored demo result.</p>
-<div id="result" class="result">
-<div class="ticket" id="rTicket"></div>
-<div class="info">
-<div><div class="label">Draw Date</div><div class="value" id="rDate"></div></div>
-<div><div class="label">Prize</div><div class="value prize" id="rPrize"></div></div>
-<div><div class="label">Status</div><div class="value" id="rStatus"></div></div>
-</div>
-</div>
-<div id="empty" class="muted" style="margin-top:20px">No ticket checked yet.</div>
-</section>
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <span class="pill">KERALA LOTTERY RESULTS</span>
+        <h2>Check Your Lottery Result</h2>
+        <p>Enter your ticket number below to check the result quickly.</p>
 
-<section class="card">
-<h2>About this page</h2>
-<p class="muted">Independent lottery results information page. Please verify results with the authorized lottery authority before relying on them.</p>
-<p class="muted">Only publish result information you are authorized to publish.</p>
-</section>
-</div>
-</main>
+        <div class="search-card">
+          <label for="ticketInput">Ticket Number</label>
+          <div class="search-row">
+            <input id="ticketInput" type="text" maxlength="30"
+                   placeholder="e.g. AB 123456" autocomplete="off">
+            <button id="checkBtn">Check Result</button>
+          </div>
+          <div class="hint">Enter the complete ticket number printed on your ticket.</div>
+        </div>
+      </div>
+    </section>
 
-<footer>© 2026 Kerala Result Lottery · Independent Results Information</footer>
+    <section class="result-wrap">
+      <div id="result" class="result-card hidden"></div>
+    </section>
 
-<script>
-const results = {
-  "KL123456": {date:"20-09-2026", prize:"₹10,000", status:"Published result"},
-  "KL654321": {date:"20-09-2026", prize:"₹5,000", status:"Published result"}
-};
-function checkResult(){
-  const t=document.getElementById("ticket").value.trim().toUpperCase();
-  const r=results[t], box=document.getElementById("result"), empty=document.getElementById("empty");
-  box.style.display="block"; empty.style.display="none";
-  if(!r){
-    box.innerHTML='<div style="color:#a33;font-weight:800">No result found</div><p class="muted">Please check the ticket number.</p>';
-    return;
-  }
-  box.innerHTML='<div class="ticket">'+t+'</div><div class="info"><div><div class="label">Draw Date</div><div class="value">'+r.date+'</div></div><div><div class="label">Prize</div><div class="value prize">'+r.prize+'</div></div><div><div class="label">Status</div><div class="value">'+r.status+'</div></div></div>';
-}
-</script>
+    <section class="info-grid">
+      <div class="info-card">
+        <div class="icon">01</div>
+        <h3>Enter Ticket</h3>
+        <p>Type your ticket number in the search box.</p>
+      </div>
+      <div class="info-card">
+        <div class="icon">02</div>
+        <h3>Check Result</h3>
+        <p>Press the check button to search the local result data.</p>
+      </div>
+      <div class="info-card">
+        <div class="icon">03</div>
+        <h3>View Details</h3>
+        <p>Winning status and prize information will be shown here.</p>
+      </div>
+    </section>
+
+    <section class="notice">
+      <strong>Important:</strong> This website is a result-checking interface. Always verify winning
+      information against the official Kerala Lottery publication before making any claim.
+    </section>
+  </main>
+
+  <footer>
+    <div>Kerala Lottery Result Checker</div>
+    <div class="footer-small">© 2026 • Result information interface</div>
+  </footer>
+
+  <script src="results.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
